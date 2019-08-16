@@ -35,7 +35,9 @@ const Image = styled.img`
 `;
 
 const ContentWrapper = styled.div`
+  width: 100%;  
   padding: 10px;
+  box-sizing: border-box;
   h3 {
     color: #6aaed4;
     font-size: 18px;

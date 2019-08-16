@@ -7,7 +7,7 @@ import { CategoryFilter } from './CategoryFilter'
 
 const uuidv4 = require('uuid/v4');
 
-export const Header = ({ fetchedFilters, onFilterChange }) =>  (
+export const Header = ({ fetchedFilters, onFilterChange, currentFilters }) =>  (
     <Wrapper>
         <Container>
             <SearchBar />
@@ -15,9 +15,24 @@ export const Header = ({ fetchedFilters, onFilterChange }) =>  (
             <FiltersContainer>
                 <span>Фильтровать статьи по: </span>
                 <FiltersWrapper>
-                    <LevelFilter fetchedFilters={fetchedFilters} onFilterChange={onFilterChange} keyGen={uuidv4}/>
-                    <CategoryFilter fetchedFilters={fetchedFilters} onFilterChange={onFilterChange} keyGen={uuidv4} />
-                    <LanguageFilter fetchedFilters={fetchedFilters} onFilterChange={onFilterChange} keyGen={uuidv4} />
+                    <LevelFilter
+                        fetchedFilters={fetchedFilters}
+                        onFilterChange={onFilterChange}
+                        keyGen={uuidv4}
+                        categoryFilterValue={currentFilters.level}
+                    />
+                    <CategoryFilter
+                        fetchedFilters={fetchedFilters}
+                        onFilterChange={onFilterChange}
+                        keyGen={uuidv4}
+                        categoryFilterValue={currentFilters.category}
+                    />
+                    <LanguageFilter
+                        fetchedFilters={fetchedFilters}
+                        onFilterChange={onFilterChange}
+                        keyGen={uuidv4}
+                        categoryFilterValue={currentFilters.language}
+                    />
                 </FiltersWrapper>
             </FiltersContainer>
         </Container>
@@ -34,6 +49,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   color: #e9e9e3;
+  margin-bottom: -40px;
 `;
 
 const Container = styled.div`

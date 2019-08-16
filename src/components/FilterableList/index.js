@@ -5,14 +5,15 @@ import { BooksCategory } from './BooksCategory'
 import { InterviewCategory } from './InterviewCategory'
 import { TasksCategory } from './TasksCategory'
 
-export const FilterableList = () => {
+export const FilterableList = ({ cards: { articles, books, interviews, tasks } }) => {
+    console.log('Articles in FilterableList: ', articles);
     return (
         <Wrapper>
             <Container>
-                <ArticlesCategory />
-                <BooksCategory />
-                <InterviewCategory />
-                <TasksCategory />
+                <ArticlesCategory cards={articles} />
+                <BooksCategory cards={books} />
+                <InterviewCategory cards={interviews} />
+                <TasksCategory cards={tasks} />
             </Container>
         </Wrapper>
     );

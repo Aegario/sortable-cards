@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const CategoryFilter = ({ fetchedFilters: { filters: { categories }, isLoaded }, onFilterChange, keyGen }) =>  (
+export const CategoryFilter = ({ fetchedFilters: { filters: { categories }, isLoaded }, onFilterChange, keyGen, categoryFilterValue }) =>  (
     <div>
-        <Select id='categoryFilter' onChange={onFilterChange}>
+        <Select id='categoryFilter' onChange={onFilterChange} value={categoryFilterValue}>
             <option>Все Категории</option>
             {isLoaded
                 ? categories.map(item => <option key={keyGen()}>{item}</option>)

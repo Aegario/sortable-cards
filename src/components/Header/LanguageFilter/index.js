@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const LanguageFilter = ({ fetchedFilters: { filters: { languages }, isLoaded }, onFilterChange, keyGen }) =>  (
+export const LanguageFilter = ({ fetchedFilters: { filters: { languages }, isLoaded }, onFilterChange, keyGen, categoryFilterValue }) =>  (
     <div>
-        <Select id='languageFilter' onChange={onFilterChange}>
+        <Select id='languageFilter' onChange={onFilterChange} value={categoryFilterValue}>
             <option>Все Языки</option>
             {isLoaded
                 ? languages.map(item => <option key={keyGen()}>{item}</option>)

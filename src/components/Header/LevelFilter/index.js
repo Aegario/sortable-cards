@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const LevelFilter = ({ fetchedFilters: { filters: { levels }, isLoaded }, onFilterChange, keyGen }) =>  (
+export const LevelFilter = ({ fetchedFilters: { filters: { levels }, isLoaded }, onFilterChange, keyGen, categoryFilterValue }) =>  (
     <div>
-        <Select id='levelFilter' onChange={onFilterChange}>
+        <Select id='levelFilter' onChange={onFilterChange} value={categoryFilterValue}>
             <option>Любой Уровень</option>
             {isLoaded
                 ? levels.map(item => <option key={keyGen()}>{item}</option>)

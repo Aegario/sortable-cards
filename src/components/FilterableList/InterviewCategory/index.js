@@ -1,15 +1,32 @@
-import React from 'react'
-import { Card } from '../../common/Card';
-import styled from 'styled-components';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Card } from '../../common/Card'
+import { Button } from '../../common/Button'
 
-export const InterviewCategory = () => {
+export const InterviewCategory = ({ cards }) => {
+    const [isEveryCardShown, setIsEveryCardShown] = useState(false);
+
+    const onClick = () => {
+        setIsEveryCardShown(!isEveryCardShown);
+    }
+
     return (
-        <Wrapper>
-            <Header>Интервью</Header>
-            <List>
-                <Card />
-            </List>
-        </Wrapper>
+        <>
+        { cards.length > 0
+            ? (
+                <Wrapper>
+                    <Header>Интервью</Header>
+                    <List>
+                        {isEveryCardShown
+                            ? cards.map(item => <Card category={item.category} level={item.level} text={item.text}/>)
+                            : cards.slice(0, 4).map(item => <Card category={item.category} level={item.level} text={item.text}/>)
+                        }
+                    </List>
+                    <Button isEveryCardShown={isEveryCardShown} onClick={onClick}/>
+                </Wrapper>
+            ) : null
+        }
+        </>
     );
 };
 
@@ -17,6 +34,7 @@ export const InterviewCategory = () => {
 const List = styled.ul`
   width: 100%;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 `;
 
@@ -27,6 +45,7 @@ const Header = styled.h2`
 `;
 
 const Wrapper = styled.div`
+  margin-top: 35px;
   width: 100%;
   display: flex;
   flex-direction: column;
