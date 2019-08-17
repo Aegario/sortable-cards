@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import randomImage from '../../../assets/randomImage.jpg'
 import Icon from '../../../assets/playButton.svg'
 
-export const Card = ({ category, level, text, isVideo }) => (
+export const Card = ({ category, level, text, isVideo, onCardClick, id }) => (
     <>
         {isVideo ? (
-                <VideoWrapper>
+                <VideoWrapper id={id} onClick={onCardClick}>
                     <ImageWrapper>
                         <Image src={randomImage} alt='randomImage' />
                         <PlayButtonIcon src={Icon}/>
@@ -18,7 +18,7 @@ export const Card = ({ category, level, text, isVideo }) => (
                     </ContentWrapper>
                 </VideoWrapper>
             ) : (
-                <Wrapper>
+                <Wrapper id={id} onClick={onCardClick}>
                     <ImageWrapper>
                         <Image src={randomImage} alt='randomImage' />
                     </ImageWrapper>

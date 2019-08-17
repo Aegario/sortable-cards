@@ -5,16 +5,16 @@ import { BooksCategory } from './BooksCategory'
 import { InterviewsCategory } from './InterviewCategory'
 import { TasksCategory } from './TasksCategory'
 
-export const FilterableList = ({ cards: { articles, books, interviews, tasks }, onClick, NumberOfSortedCards }) => (
+export const FilterableList = ({ cards: { articles, books, interviews, tasks }, onButtonClick, onCardClick, NumberOfSortedCards }) => (
     <Wrapper>
         <Container>
             {NumberOfSortedCards > 0
             ? (
                 <>
-                    <ArticlesCategory cards={articles} onClick={onClick} />
-                    <BooksCategory cards={books} onClick={onClick} />
-                    <InterviewsCategory cards={interviews} onClick={onClick} />
-                    <TasksCategory cards={tasks} onClick={onClick} />
+                    <ArticlesCategory cards={articles} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
+                    <BooksCategory cards={books} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
+                    <InterviewsCategory cards={interviews} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
+                    <TasksCategory cards={tasks} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
                 </>
                 )
             : <Paragraph>Нет результатов по данному запросу.</Paragraph>

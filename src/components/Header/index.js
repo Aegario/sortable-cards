@@ -21,7 +21,8 @@ export const Header = ({ fetchedFilters, onFilterChange, currentFilters, onSearc
                     <LevelFilter
                         fetchedFilters={fetchedFilters}
                         onFilterChange={onFilterChange}
-                        keyGen={uuidv4} categoryFilterValue={currentFilters.level}
+                        keyGen={uuidv4}
+                        categoryFilterValue={currentFilters.level}
                     />
                     <CategoryFilter
                         fetchedFilters={fetchedFilters}

@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { Card } from '../../common/Card'
 import { Button } from '../../common/Button'
 
-export const BooksCategory = ({ cards: { data, isEveryCardShown }, onClick }) => {
+export const BooksCategory = ({ cards: { data, isEveryCardShown }, onButtonClick, onCardClick }) => {
 
     const onBooksButtonClick = () => {
-        onClick('Books');
+        onButtonClick('Books');
     }
 
     return (
@@ -20,19 +20,24 @@ export const BooksCategory = ({ cards: { data, isEveryCardShown }, onClick }) =>
                                 ? (data.map(item => (
                                     <Card
                                         key={item.id}
+                                        id={item.id}
                                         category={item.category}
                                         level={item.level}
                                         text={item.text}
                                         isVideo={item.isVideo}
+                                        onCardClick={onCardClick}
                                     />
                                 )))
                                 : (data.slice(0, 4).map(item => (
                                     <Card
                                         key={item.id}
+                                        id={item.id}
                                         category={item.category}
                                         level={item.level}
                                         text={item.text}
-                                        isVideo={item.isVideo} />
+                                        isVideo={item.isVideo}
+                                        onCardClick={onCardClick}
+                                    />
                                 )))
                             }
                         </List>

@@ -143,6 +143,10 @@ export const DataProvider = () => {
         });
     }
 
+    const onCardClick = (e) => {
+        console.log(e.target.id);
+    }
+
     return (
         <>
             <Header
@@ -154,8 +158,9 @@ export const DataProvider = () => {
             />
             <FilterableList
                 cards={data(cards.cards, currentFilters, isEveryCardShown, searchBarValue)}
-                onClick={onButtonClick}
+                onButtonClick={onButtonClick}
                 NumberOfSortedCards={NumberOfSortedCards}
+                onCardClick={onCardClick}
             />
         </>
     );
