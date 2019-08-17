@@ -17,6 +17,11 @@ const CustomButton = styled.button`
   height: 30px;
   font-size: 14px;
   margin-top: 20px;
+  transition: .1s;
+  :hover {
+    background-color: #244e77;
+    color: white;
+  }
   :focus {
     outline: none;
   }

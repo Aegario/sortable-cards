@@ -7,6 +7,14 @@ export const DataProvider = () => {
     const [cards, setCards] = useState({ cards: [], isLoaded: false });
     const [fetchedFilters, setFetchedFilters] = useState({ filters: {}, isLoaded: false })
     const [currentFilters, setCurrentFilters] = useState({ level: '', category: '', language: '' });
+    const [isEveryCardShown, setIsEveryCardShown] = useState({
+        isEveryArticlesCardShown: false,
+        isEveryBooksCardShown: false,
+        isEveryInterviewsCardShown: false,
+        isEveryTasksCardShown: false
+    });
+    const [searchBarValue, setSearchBarValue] = useState('');
+    let NumberOfSortedCards = 0;
 
     const fetchCards = async () => {
         const result = await fetch('https://api.jsonbin.io/b/5d4be91d00947c04a5a75da2/latest');
@@ -19,6 +27,21 @@ export const DataProvider = () => {
         const data = await result.json();
         setFetchedFilters({ filters: data, isLoaded: true });
     }
+
+    useEffect(() => {
+        fetchCards();
+        fetchFilters();
+        console.log('-----------COMPONENT DID MOUNT!-----------');
+    }, []);
+
+    useEffect(() => {
+        console.log('------------COMPONENT UPDATED------------');
+        console.log('cards: ', cards);
+        console.log('filters: ', fetchedFilters);
+        console.log('current filters: ', currentFilters);
+        console.log('IS EVERY CARD SHOWN: ----------', isEveryCardShown);
+       console.log(searchBarValue);
+    });
 
     const onFilterChange = (e) => { //basically just saves filter values in the state
         const targetId = e.target.id;
@@ -67,46 +90,58 @@ export const DataProvider = () => {
             default:
                 console.log(`target id ${targetId} is unknown`);
         }
+        setIsEveryCardShown({
+            isEveryArticlesCardShown: false,
+            isEveryBooksCardShown: false,
+            isEveryInterviewsCardShown: false,
+            isEveryTasksCardShown: false
+        });
     }
 
-    const categorize = (cards) => {
+    const onSearchBarChange = (e) => {
+        setSearchBarValue(e.target.value)
+    }
+
+    const categorize = (cards, {
+        isEveryArticlesCardShown,
+        isEveryBooksCardShown,
+        isEveryInterviewsCardShown,
+        isEveryTasksCardShown
+    }) => {
         return {
-            articles: [...cards.filter(item => item.category === 'Статьи')],
-            interviews: [...cards.filter(item => item.category === 'Интервью')],
-            tasks: [...cards.filter(item => item.category === 'Задачи')],
-            books: [...cards.filter(item => item.category === 'Книги')]
+            articles: { data: [...cards.filter(item => item.category === 'Статьи')], isEveryCardShown: isEveryArticlesCardShown },
+            interviews: { data: [...cards.filter(item => item.category === 'Интервью')], isEveryCardShown: isEveryInterviewsCardShown },
+            tasks: { data: [...cards.filter(item => item.category === 'Задачи')], isEveryCardShown: isEveryTasksCardShown },
+            books: { data: [...cards.filter(item => item.category === 'Книги')], isEveryCardShown: isEveryBooksCardShown }
         };
     }
 
-    const filtering = (cards, filters) => {
+    const filtering = (cards, currentFilters) => {
         let filteredCards = cards;
 
-        Object.keys(filters).forEach(filterName => {
-            if (filters[filterName]) {
-                filteredCards = filteredCards.filter(card => card[filterName] === filters[filterName]);
+        Object.keys(currentFilters).forEach(filterName => {
+            if (currentFilters[filterName]) {
+                filteredCards = filteredCards.filter(card => card[filterName] === currentFilters[filterName]);
             }
         });
         return filteredCards;
     }
 
-    const data = (cards, filters) => {
-        const filteredItems = filtering(cards, filters);
-        const categorizedItems = categorize(filteredItems);
-        return categorizedItems;
+    const search = (cards, inputValue) => cards.filter(item => item.text.includes(inputValue));
+
+    const data = (cards, currentFilters, isEveryCardShown, inputValue) => {
+        const filteredItems = filtering(cards, currentFilters);
+        const searchedItems = search(filteredItems, inputValue);
+        NumberOfSortedCards = searchedItems.length;
+        return categorize(searchedItems, isEveryCardShown);
     }
 
-    useEffect(() => {
-        fetchCards();
-        fetchFilters();
-        console.log('-----------COMPONENT DID MOUNT!-----------');
-    }, []);
-
-    useEffect(() => {
-        console.log('------------COMPONENT UPDATED------------');
-        console.log('cards: ', cards);
-        console.log('filters: ', fetchedFilters);
-        console.log('current filters: ', currentFilters);
-    });
+    const onButtonClick = (categoryName) => {
+        setIsEveryCardShown({
+            ...isEveryCardShown,
+            [`isEvery${categoryName}CardShown`]: !isEveryCardShown[`isEvery${categoryName}CardShown`]
+        });
+    }
 
     return (
         <>
@@ -114,8 +149,14 @@ export const DataProvider = () => {
                 fetchedFilters={fetchedFilters}
                 currentFilters={currentFilters}
                 onFilterChange={onFilterChange}
+                onSearchBarChange={onSearchBarChange}
+                searchBarValue={searchBarValue}
             />
-            <FilterableList cards={data(cards.cards, currentFilters)}/>
+            <FilterableList
+                cards={data(cards.cards, currentFilters, isEveryCardShown, searchBarValue)}
+                onClick={onButtonClick}
+                NumberOfSortedCards={NumberOfSortedCards}
+            />
         </>
     );
 };

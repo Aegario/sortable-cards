@@ -7,10 +7,13 @@ import { CategoryFilter } from './CategoryFilter'
 
 const uuidv4 = require('uuid/v4');
 
-export const Header = ({ fetchedFilters, onFilterChange, currentFilters }) =>  (
+export const Header = ({ fetchedFilters, onFilterChange, currentFilters, onSearchBarChange, searchBarValue }) =>  (
     <Wrapper>
         <Container>
-            <SearchBar />
+            <SearchBar
+                onSearchBarChange={onSearchBarChange}
+                searchBarValue={searchBarValue}
+            />
             <HorizontalLine />
             <FiltersContainer>
                 <span>Фильтровать статьи по: </span>
@@ -38,7 +41,6 @@ export const Header = ({ fetchedFilters, onFilterChange, currentFilters }) =>  (
         </Container>
     </Wrapper>
 );
-
 
 
 //#region StyledComponents

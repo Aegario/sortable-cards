@@ -1,10 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const SearchBar= () =>  (
+export const SearchBar = ({ onSearchBarChange, searchBarValue }) =>  (
     <Wrapper>
         <label htmlFor='search'>Поиск по ключевым словам: </label>
-        <Input type='search' placeholder='Поиск' id='search' />
+        <Input
+            type='search'
+            placeholder='Поиск'
+            id='search'
+            onChange={onSearchBarChange}
+            value={searchBarValue}
+        />
     </Wrapper>
 );
 

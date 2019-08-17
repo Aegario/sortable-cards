@@ -1,28 +1,45 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Card } from '../../common/Card'
 import { Button } from '../../common/Button'
 
-export const ArticlesCategory = ({ cards }) => {
-    const [isEveryCardShown, setIsEveryCardShown] = useState(false);
+export const ArticlesCategory = ({ cards: { data, isEveryCardShown }, onClick }) => {
 
-    const onClick = () => {
-        setIsEveryCardShown(!isEveryCardShown);
+    const onArticlesButtonClick = () => {
+        onClick('Articles');
     }
 
     return (
         <>
-            { cards.length > 0
+            { data.length > 0
                 ? (
                     <Wrapper>
                         <Header>Статьи</Header>
                         <List>
                             {isEveryCardShown
-                                ? cards.map(item => <Card category={item.category} level={item.level} text={item.text}/>)
-                                : cards.slice(0, 4).map(item => <Card category={item.category} level={item.level} text={item.text}/>)
+                                ? (data.map(item => (
+                                    <Card
+                                        key={item.id}
+                                        category={item.category}
+                                        level={item.level}
+                                        text={item.text}
+                                        isVideo={item.isVideo}
+                                    />
+                                )))
+                                : (data.slice(0, 4).map(item => (
+                                    <Card
+                                        key={item.id}
+                                        category={item.category}
+                                        level={item.level}
+                                        text={item.text}
+                                        isVideo={item.isVideo} />
+                                )))
                             }
                         </List>
-                        <Button isEveryCardShown={isEveryCardShown} onClick={onClick}/>
+                        { data.length > 4
+                            ? <Button isEveryCardShown={isEveryCardShown} onClick={onArticlesButtonClick} />
+                            : null
+                        }
                     </Wrapper>
                 ) : null
             }
@@ -40,6 +57,7 @@ const List = styled.ul`
 
 const Header = styled.h2`
   font-size: 20px;
+  margin-bottom: 20px;
   color: #244e77;
   text-transform: uppercase;
 `;
