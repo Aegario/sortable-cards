@@ -33,6 +33,15 @@ export const DataProvider = () => {
         fetchFilters();
     }, []);
 
+    useEffect(() => {
+        console.log('------------COMPONENT UPDATED------------');
+        console.log('cards: ', cards);
+        console.log('filters: ', fetchedFilters);
+        console.log('current filters: ', currentFiltersValues);
+        console.log('IS EVERY CARD SHOWN: ----------', isEveryCardShown);
+        console.log(searchBarValue);
+    });
+
     const onFilterChange = (e) => { //basically just saves filter values in the state
         const targetId = e.target.id;
         const targetValue = e.target.value;
@@ -103,14 +112,14 @@ export const DataProvider = () => {
         isEveryBooksCardShown,
         isEveryInterviewsCardShown,
         isEveryTasksCardShown
-    }) => {
-        return [
+    }) => (
+        [
             { categoryName: 'Статьи', data: [...cards.filter(item => item.category === 'Статьи')], isEveryCardShown: isEveryArticlesCardShown },
             { categoryName: 'Интервью', data: [...cards.filter(item => item.category === 'Интервью')], isEveryCardShown: isEveryInterviewsCardShown },
             { categoryName: 'Задачи', data: [...cards.filter(item => item.category === 'Задачи')], isEveryCardShown: isEveryTasksCardShown },
             { categoryName: 'Книги', data: [...cards.filter(item => item.category === 'Книги')], isEveryCardShown: isEveryBooksCardShown }
-        ];
-    }
+        ]
+    );
 
     const filtering = (cards, currentFilters) => {
         let filteredCards = cards;

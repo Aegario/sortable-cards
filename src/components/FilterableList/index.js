@@ -29,7 +29,6 @@ export const FilterableList = ({ cards, onButtonClick, onCardClick, NumberOfSort
 );
 
 
-
 //#region StyledComponents
 const Wrapper = styled.div`
   width: 100%;
