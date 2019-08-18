@@ -89,7 +89,13 @@ export const DataProvider = () => {
     }
 
     const onSearchBarChange = (e) => {
-        setSearchBarValue(e.target.value)
+        setSearchBarValue(e.target.value);
+        setIsEveryCardShown({
+            isEveryArticlesCardShown: false,
+            isEveryBooksCardShown: false,
+            isEveryInterviewsCardShown: false,
+            isEveryTasksCardShown: false
+        });
     }
 
     const categorize = (cards, {
