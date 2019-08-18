@@ -1,28 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Category } from './Category'
+import { Spinner } from '../common/Spinner'
 
 const uuidv4 = require('uuid/v4');
 
-export const FilterableList = ({ cards, onButtonClick, onCardClick, NumberOfSortedCards }) => (
+export const FilterableList = ({ cards, onButtonClick, onCardClick, NumberOfSortedCards, isDataReady }) => (
     <Wrapper>
         <Container>
-            {NumberOfSortedCards > 0 ?
-                (
-                    <>
-                        {
-                            cards.map(item => (
-                                <Category
-                                    header={item.categoryName}
-                                    cards={item}
-                                    onButtonClick={onButtonClick}
-                                    onCardClick={onCardClick}
-                                    key={uuidv4()}
-                                />
-                            ))
-                        }
-                    </>
-                ) : <Paragraph>Нет результатов по данному запросу.</Paragraph>
+            {isDataReady ? (
+                NumberOfSortedCards > 0 ?
+                    (
+                        <>
+                            {
+                                cards.map(item => (
+                                    <Category
+                                        header={item.categoryName}
+                                        cards={item}
+                                        onButtonClick={onButtonClick}
+                                        onCardClick={onCardClick}
+                                        key={uuidv4()}
+                                    />
+                                ))
+                            }
+                        </>
+                    ) : <Paragraph>Нет результатов по данному запросу.</Paragraph>
+            ) : <Spinner />
             }
         </Container>
     </Wrapper>

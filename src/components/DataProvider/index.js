@@ -15,6 +15,7 @@ export const DataProvider = () => {
     });
     const [searchBarValue, setSearchBarValue] = useState('');
     let NumberOfSortedCards = 0;
+    let isDataReady = false;
 
     const fetchCards = async () => {
         const result = await fetch('https://api.jsonbin.io/b/5d4be91d00947c04a5a75da2/latest');
@@ -138,6 +139,7 @@ export const DataProvider = () => {
         const filteredItems = filtering(cards, currentFilters);
         const searchedItems = search(filteredItems, inputValue);
         NumberOfSortedCards = searchedItems.length;
+        if (cards.length > 0) isDataReady = true;
         return categorize(searchedItems, isEveryCardShown);
     }
 
@@ -164,6 +166,7 @@ export const DataProvider = () => {
             <FilterableList
                 cards={data(cards.cards, currentFiltersValues, isEveryCardShown, searchBarValue)}
                 onButtonClick={onButtonClick}
+                isDataReady={isDataReady}
                 NumberOfSortedCards={NumberOfSortedCards}
                 onCardClick={onCardClick}
             />
