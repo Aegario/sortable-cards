@@ -73,7 +73,7 @@ const VideoWrapper = styled.li`
 `;
 
 const Image = styled.img`
-  z-index: -1;
+  //z-index: -1;
   width: 250px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -98,6 +98,7 @@ const ImageWrapper = styled.div`
 const ContentWrapper = styled.div`
   width: 100%;  
   padding: 10px;
+  z-index: -1;
   box-sizing: border-box;
   h3 {
     color: #6aaed4;

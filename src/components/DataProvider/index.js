@@ -6,7 +6,7 @@ import { FilterableList } from '../FilterableList'
 export const DataProvider = () => {
     const [cards, setCards] = useState({ cards: [], isLoaded: false });
     const [fetchedFilters, setFetchedFilters] = useState({ filters: {}, isLoaded: false })
-    const [currentFilters, setCurrentFilters] = useState({ level: '', category: '', language: '' });
+    const [currentFiltersValues, setCurrentFiltersValues] = useState({ level: '', category: '', language: '' });
     const [isEveryCardShown, setIsEveryCardShown] = useState({
         isEveryArticlesCardShown: false,
         isEveryBooksCardShown: false,
@@ -31,17 +31,7 @@ export const DataProvider = () => {
     useEffect(() => {
         fetchCards();
         fetchFilters();
-        console.log('-----------COMPONENT DID MOUNT!-----------');
     }, []);
-
-    useEffect(() => {
-        console.log('------------COMPONENT UPDATED------------');
-        console.log('cards: ', cards);
-        console.log('filters: ', fetchedFilters);
-        console.log('current filters: ', currentFilters);
-        console.log('IS EVERY CARD SHOWN: ----------', isEveryCardShown);
-       console.log(searchBarValue);
-    });
 
     const onFilterChange = (e) => { //basically just saves filter values in the state
         const targetId = e.target.id;
@@ -50,39 +40,39 @@ export const DataProvider = () => {
         switch (targetId) {
             case 'levelFilter':
                 if (targetValue !== 'Любой Уровень') {
-                    setCurrentFilters({
-                        ...currentFilters,
+                    setCurrentFiltersValues({
+                        ...currentFiltersValues,
                         level: targetValue
                     });
                 } else {
-                    setCurrentFilters({
-                        ...currentFilters,
+                    setCurrentFiltersValues({
+                        ...currentFiltersValues,
                         level: ''
                     });
                 }
                 break;
             case 'categoryFilter':
                 if (targetValue !== 'Все Категории') {
-                    setCurrentFilters({
-                        ...currentFilters,
+                    setCurrentFiltersValues({
+                        ...currentFiltersValues,
                         category: targetValue
                     });
                 } else {
-                    setCurrentFilters({
-                        ...currentFilters,
+                    setCurrentFiltersValues({
+                        ...currentFiltersValues,
                         category: ''
                     });
                 }
                 break;
             case 'languageFilter':
                 if (targetValue !== 'Все Языки') {
-                    setCurrentFilters({
-                        ...currentFilters,
+                    setCurrentFiltersValues({
+                        ...currentFiltersValues,
                         language: targetValue
                     });
                 } else {
-                    setCurrentFilters({
-                        ...currentFilters,
+                    setCurrentFiltersValues({
+                        ...currentFiltersValues,
                         language: ''
                     });
                 }
@@ -108,12 +98,12 @@ export const DataProvider = () => {
         isEveryInterviewsCardShown,
         isEveryTasksCardShown
     }) => {
-        return {
-            articles: { data: [...cards.filter(item => item.category === 'Статьи')], isEveryCardShown: isEveryArticlesCardShown },
-            interviews: { data: [...cards.filter(item => item.category === 'Интервью')], isEveryCardShown: isEveryInterviewsCardShown },
-            tasks: { data: [...cards.filter(item => item.category === 'Задачи')], isEveryCardShown: isEveryTasksCardShown },
-            books: { data: [...cards.filter(item => item.category === 'Книги')], isEveryCardShown: isEveryBooksCardShown }
-        };
+        return [
+            { categoryName: 'Статьи', data: [...cards.filter(item => item.category === 'Статьи')], isEveryCardShown: isEveryArticlesCardShown },
+            { categoryName: 'Интервью', data: [...cards.filter(item => item.category === 'Интервью')], isEveryCardShown: isEveryInterviewsCardShown },
+            { categoryName: 'Задачи', data: [...cards.filter(item => item.category === 'Задачи')], isEveryCardShown: isEveryTasksCardShown },
+            { categoryName: 'Книги', data: [...cards.filter(item => item.category === 'Книги')], isEveryCardShown: isEveryBooksCardShown }
+        ];
     }
 
     const filtering = (cards, currentFilters) => {
@@ -151,13 +141,13 @@ export const DataProvider = () => {
         <>
             <Header
                 fetchedFilters={fetchedFilters}
-                currentFilters={currentFilters}
+                currentFiltersValues={currentFiltersValues}
                 onFilterChange={onFilterChange}
                 onSearchBarChange={onSearchBarChange}
                 searchBarValue={searchBarValue}
             />
             <FilterableList
-                cards={data(cards.cards, currentFilters, isEveryCardShown, searchBarValue)}
+                cards={data(cards.cards, currentFiltersValues, isEveryCardShown, searchBarValue)}
                 onButtonClick={onButtonClick}
                 NumberOfSortedCards={NumberOfSortedCards}
                 onCardClick={onCardClick}

@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SearchBar } from './SearchBar'
-import { LevelFilter } from './LevelFilter'
-import { LanguageFilter } from './LanguageFilter'
-import { CategoryFilter } from './CategoryFilter'
+import { Filter } from './Filter'
 
 const uuidv4 = require('uuid/v4');
 
-export const Header = ({ fetchedFilters, onFilterChange, currentFilters, onSearchBarChange, searchBarValue }) =>  (
+export const Header = ({ fetchedFilters: { filters: { languages, levels, categories }, isLoaded }, onFilterChange, currentFiltersValues, onSearchBarChange, searchBarValue }) =>  (
     <Wrapper>
         <Container>
             <SearchBar
@@ -18,29 +16,40 @@ export const Header = ({ fetchedFilters, onFilterChange, currentFilters, onSearc
             <FiltersContainer>
                 <span>Фильтровать статьи по: </span>
                 <FiltersWrapper>
-                    <LevelFilter
-                        fetchedFilters={fetchedFilters}
+                   <Filter
+                        id='levelFilter'
+                        initialOption='Любой Уровень'
+                        currentFilterValue={currentFiltersValues.level}
+                        fetchedFiltersValues={levels}
+                        isLoaded={isLoaded}
                         onFilterChange={onFilterChange}
                         keyGen={uuidv4}
-                        categoryFilterValue={currentFilters.level}
                     />
-                    <CategoryFilter
-                        fetchedFilters={fetchedFilters}
+                    <Filter
+                        id='categoryFilter'
+                        initialOption='Все Категории'
+                        currentFilterValue={currentFiltersValues.category}
+                        fetchedFiltersValues={categories}
+                        isLoaded={isLoaded}
                         onFilterChange={onFilterChange}
                         keyGen={uuidv4}
-                        categoryFilterValue={currentFilters.category}
+
                     />
-                    <LanguageFilter
-                        fetchedFilters={fetchedFilters}
+                    <Filter
+                        id='languageFilter'
+                        initialOption='Все Языки'
+                        currentFilterValue={currentFiltersValues.language}
+                        fetchedFiltersValues={languages}
+                        isLoaded={isLoaded}
                         onFilterChange={onFilterChange}
                         keyGen={uuidv4}
-                        categoryFilterValue={currentFilters.language}
                     />
                 </FiltersWrapper>
             </FiltersContainer>
         </Container>
     </Wrapper>
 );
+
 
 
 //#region StyledComponents

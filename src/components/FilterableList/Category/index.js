@@ -3,10 +3,17 @@ import styled from 'styled-components'
 import { Card } from '../../common/Card'
 import { Button } from '../../common/Button'
 
-export const InterviewsCategory = ({ cards: { data, isEveryCardShown }, onButtonClick, onCardClick }) => {
+export const Category = ({ cards: { data, isEveryCardShown }, onButtonClick, onCardClick, header }) => {
+
+    const namesOfCategoriesDictionary = {
+        'Интервью': 'Interviews',
+        'Статьи': 'Articles',
+        'Книги': 'Books',
+        'Задачи': 'Tasks'
+    }
 
     const onInterviewsButtonClick = () => {
-        onButtonClick('Interviews');
+        onButtonClick(namesOfCategoriesDictionary[header]);
     }
 
     return (
@@ -14,7 +21,7 @@ export const InterviewsCategory = ({ cards: { data, isEveryCardShown }, onButton
         { data.length > 0
             ? (
                 <Wrapper>
-                    <Header>Интервью</Header>
+                    <Header>{header}</Header>
                     <List>
                         {isEveryCardShown
                             ? (data.map(item => (

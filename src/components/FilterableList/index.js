@@ -1,25 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ArticlesCategory } from './ArticlesCategory'
-import { BooksCategory } from './BooksCategory'
-import { InterviewsCategory } from './InterviewCategory'
-import { TasksCategory } from './TasksCategory'
+import { Category } from './Category'
 
-export const FilterableList = ({ cards: { articles, books, interviews, tasks }, onButtonClick, onCardClick, NumberOfSortedCards }) => (
+const uuidv4 = require('uuid/v4');
+
+export const FilterableList = ({ cards, onButtonClick, onCardClick, NumberOfSortedCards }) => (
     <Wrapper>
         <Container>
-            {NumberOfSortedCards > 0
-            ? (
-                <>
-                    <ArticlesCategory cards={articles} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
-                    <BooksCategory cards={books} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
-                    <InterviewsCategory cards={interviews} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
-                    <TasksCategory cards={tasks} onButtonClick={onButtonClick} onCardClick={onCardClick}/>
-                </>
-                )
-            : <Paragraph>Нет результатов по данному запросу.</Paragraph>
+            {NumberOfSortedCards > 0 ?
+                (
+                    <>
+                        {
+                            cards.map(item => (
+                                <Category
+                                    header={item.categoryName}
+                                    cards={item}
+                                    onButtonClick={onButtonClick}
+                                    onCardClick={onCardClick}
+                                    key={uuidv4()}
+                                />
+                            ))
+                        }
+                    </>
+                ) : <Paragraph>Нет результатов по данному запросу.</Paragraph>
             }
-
         </Container>
     </Wrapper>
 );
