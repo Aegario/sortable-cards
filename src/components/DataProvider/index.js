@@ -117,7 +117,7 @@ export const DataProvider = () => {
         return filteredCards;
     }
 
-    const search = (cards, inputValue) => cards.filter(item => item.text.includes(inputValue));
+    const search = (cards, inputValue) => cards.filter(item => item.text.toLowerCase().includes(inputValue.toLowerCase()));
 
     const data = (cards, currentFilters, isEveryCardShown, inputValue) => {
         const filteredItems = filtering(cards, currentFilters);

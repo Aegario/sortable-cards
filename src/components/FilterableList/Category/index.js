@@ -63,7 +63,7 @@ export const Category = ({ cards: { data, isEveryCardShown }, onButtonClick, onC
 const List = styled.ul`
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 `;
 
