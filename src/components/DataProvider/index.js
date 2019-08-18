@@ -34,15 +34,6 @@ export const DataProvider = () => {
         fetchFilters();
     }, []);
 
-    useEffect(() => {
-        console.log('------------COMPONENT UPDATED------------');
-        console.log('cards: ', cards);
-        console.log('filters: ', fetchedFilters);
-        console.log('current filters: ', currentFiltersValues);
-        console.log('IS EVERY CARD SHOWN: ----------', isEveryCardShown);
-        console.log(searchBarValue);
-    });
-
     const onFilterChange = (e) => { //basically just saves filter values in the state
         const targetId = e.target.id;
         const targetValue = e.target.value;
